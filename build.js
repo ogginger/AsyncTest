@@ -10,6 +10,7 @@
 	"promise": "lib/promise.min",
 	"AsyncAssertion": "lib/async_assertion.min",
 	"AsyncSetup": "lib/async_setup.min",
+	"AsyncAction": "lib/async_action.min",
 	"Debug": "lib/debug.min"
     },
     exclude: [ "underscore", "log", "rsvp", "promise" ],

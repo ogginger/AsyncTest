@@ -1,31 +1,39 @@
 //AsyncTest.js: Functional Logic.
 
 define([
+	"log",
 	"promise",
 	"Debug",
 	"AsyncSetup",
-	"AsyncAssertion"
+	"AsyncAssertion",
+	"AsyncAction"
 ], function(
+	log,
 	promise,
 	Debug,
 	AsyncSetup,
-	AsyncAssertion
+	AsyncAssertion,
+	AsyncAction
 ) {
   return function( Input ) {
 	return {
 		"Name": Input.Name,
 		"Run": function() {
-			return promise(function( resolve ) {
+			return promise(function( resolve, reject ) {
 				//AsyncSetup
 				AsyncSetup( Input.Input ).then(function( Setup ) {
+					Input.Input = Setup;
+					
 					//Action
-					Input.Function( Setup ).then(function( Result ) {
+					AsyncAction( Input ).then(function( Result ) {
 						Input.Result = Result;
 						Debug( Input );
 						//Assertion
 						AsyncAssertion( Input ).then(function( TestResult ) {
 							resolve( TestResult );
 						});
+					}).catch(function( Error ) {	
+						reject( Error );
 					});
 				});	
 			});
